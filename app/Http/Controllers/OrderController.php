@@ -13,8 +13,8 @@ class OrderController extends Controller
     //
     public function index()
     {
-        $order = Order::with(['customers', 'products', 'order_details'])->paginate(5);
-        return view('orders.index', compact('order'));
+        $orders = Order::with(['customers', 'products', 'order_details'])->paginate(5);
+        return view('orders.index', compact('orders'));
 
     }
 }

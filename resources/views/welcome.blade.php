@@ -307,7 +307,7 @@ body, html {
                                     </div>
                                     <div class="thumb-content">
                                         <h4>Đơn hàng</h4>
-                                        <a href="#" class="btn btn-primary">Đi tới <i class="fa fa-angle-right"></i></a>
+                                        <a href="{{route('orders.index')}}" class="btn btn-primary">Đi tới <i class="fa fa-angle-right"></i></a>
                                     </div>
                                 </div>
                             </div>
