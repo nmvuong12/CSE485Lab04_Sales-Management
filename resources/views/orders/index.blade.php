@@ -273,13 +273,14 @@ $(document).ready(function(){
 						<h2>Quản lý <b>Đơn hàng</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm sản phẩm</span></a>
+						<a href="#routeCreate" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm đơn hàng</span></a>
 					</div>
 				</div>
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
+						<th>ID đơn hàng</th>
                         <th>Khách hàng</th>
 						<th>Tên sản phẩm</th>
 						<th>Số lượng</th>
@@ -289,22 +290,25 @@ $(document).ready(function(){
 					</tr>
 				</thead>
 				<tbody>	
-					@foreach($orders as $order)				
-					<tr>
-						<td>{{$order->customers->name}}</td>
-						<td>{{$order->products->name}}</td>
-						<td>{{$order->order_details->quantity}}</td>
-						<td>{{$order->order_date}}</td>
-						<td>{{$order->status}}</td>
-						<td>
-							<a href="#routeEdit" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr> 
-                    @endforeach
+					@foreach ($orders as $order)
+						@foreach ($order->order_details as $detail)
+							<tr>
+								<td>{{ $order->id }}</td>
+								<td>{{ $order->customer->name }}</td>
+								<td>{{ $detail->product->name }} </td>
+								<td>{{ $detail->quantity }}</td>
+								<td>{{ $order->order_date }}</td>
+								<td>{{ $order->status }}</td>
+								<td>
+									<a href="#routeEdit" class="edit"><i class="material-icons" data-toggle="tooltip" title="Lịch sử">visibility</i></a>
+									<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+								</td>
+							</tr>
+						@endforeach
+					@endforeach
 				</tbody>
 			</table>
-            <div class="d-flex justify-content-center">
+			<div class="d-flex justify-content-center">
 				{{ $orders->links('pagination::bootstrap-4') }}
 		    </div>
 		</div>

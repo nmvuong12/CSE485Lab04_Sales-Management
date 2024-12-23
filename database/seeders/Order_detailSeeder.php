@@ -21,7 +21,7 @@ class Order_detailSeeder extends Seeder
         $order_id = Order::pluck('id')->toArray();
         $product_id = Product::pluck('id')->toArray();
 
-        for($i=0; $i<100; $i++)
+        for($i=0; $i<10000; $i++)
         {
             Order_detail::create([
                 'order_id'=>$faker->randomElement($order_id),
