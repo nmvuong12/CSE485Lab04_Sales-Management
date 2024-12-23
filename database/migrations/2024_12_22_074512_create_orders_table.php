@@ -9,18 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->date('order_date');
-            $table->boolean('status')->default(0);
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->date('order_date'); // Ngày đặt hàng
+            $table->string('status')->default('Pending'); // Trạng thái đơn hàng: Pending, Processing, Completed, Cancelled
             $table->timestamps();
-
-            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
+
 
     /**
      * Reverse the migrations.
