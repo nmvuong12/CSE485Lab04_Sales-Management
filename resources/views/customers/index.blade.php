@@ -28,7 +28,7 @@ body {
 	min-width: 1000px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
-.table-title {        
+.table-title {
 	padding-bottom: 15px;
 	background: #435d7d;
 	color: #fff;
@@ -85,7 +85,7 @@ table.table th i {
 	font-size: 13px;
 	margin: 0 5px;
 	cursor: pointer;
-}	
+}
 table.table td:last-child i {
 	opacity: 0.9;
 	font-size: 22px;
@@ -133,11 +133,11 @@ table.table .avatar {
 }
 .pagination li a:hover {
 	color: #666;
-}	
+}
 .pagination li.active a, .pagination li.active a.page-link {
 	background: #03A9F4;
 }
-.pagination li.active a:hover {        
+.pagination li.active a:hover {
 	background: #0397d6;
 }
 .pagination li.disabled i {
@@ -151,12 +151,12 @@ table.table .avatar {
 	float: left;
 	margin-top: 10px;
 	font-size: 13px;
-}    
+}
 /* Custom checkbox */
 .custom-checkbox {
 	position: relative;
 }
-.custom-checkbox input[type="checkbox"] {    
+.custom-checkbox input[type="checkbox"] {
 	opacity: 0;
 	position: absolute;
 	margin: 5px 0 0 3px;
@@ -232,28 +232,28 @@ table.table .avatar {
 .modal .btn {
 	border-radius: 2px;
 	min-width: 100px;
-}	
+}
 .modal form label {
 	font-weight: normal;
-}	
+}
 </style>
 <script>
 $(document).ready(function(){
 	// Activate tooltip
 	$('[data-toggle="tooltip"]').tooltip();
-	
+
 	// Select/Deselect checkboxes
 	var checkbox = $('table tbody input[type="checkbox"]');
 	$("#selectAll").click(function(){
 		if(this.checked){
 			checkbox.each(function(){
-				this.checked = true;                        
+				this.checked = true;
 			});
 		} else{
 			checkbox.each(function(){
-				this.checked = false;                        
+				this.checked = false;
 			});
-		} 
+		}
 	});
 	checkbox.click(function(){
 		if(!this.checked){
@@ -273,13 +273,14 @@ $(document).ready(function(){
 						<h2>Quản lý <b>Khách hàng</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm khách hàng</span></a>
+						<a href="{{route('customers.create')}}" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm khách hàng</span></a>
 					</div>
 				</div>
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
+                        <th>ID</th>
 						<th>Họ tên</th>
 						<th>Địa chỉ</th>
 						<th>Số điện thoại</th>
@@ -287,18 +288,19 @@ $(document).ready(function(){
 						<th>Hành động</th>
 					</tr>
 				</thead>
-				<tbody>	
-					@foreach($customers as $customer)				
+				<tbody>
+					@foreach($customers as $customer)
 					<tr>
+                        <td>{{ $customer->id }}</td>
 						<td>{{$customer->name}}</td>
 						<td>{{$customer->address}}</td>
 						<td>{{$customer->phone}}</td>
 						<td>{{$customer->email}}</td>
 						<td>
-							<a href="#routeEdit" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="{{route('customers.edit',$customer->id)}}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
-					</tr> 
+					</tr>
                     @endforeach
 				</tbody>
 			</table>
@@ -306,24 +308,25 @@ $(document).ready(function(){
 				{{ $customers->links('pagination::bootstrap-4') }}
 		    </div>
 		</div>
-	</div>        
+	</div>
 </div>
 <!-- Delete Modal HTML -->
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Delete Employee</h4>
+            <form action="{{route('customers.destroy', $customer->id)}}" method="post">
+                @csrf
+                @method('delete')
+				<div class="modal-header">
+					<h4 class="modal-title">Xóa khách hàng</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">					
-					<p>Are you sure you want to delete these Records?</p>
-					<p class="text-warning"><small>This action cannot be undone.</small></p>
+				<div class="modal-body">
+					<p>Bạn có chắc muốn xóa khách hàng này</p>
 				</div>
 				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Đóng">
+					<input type="submit" class="btn btn-danger" value="Xóa">
 				</div>
 			</form>
 		</div>
