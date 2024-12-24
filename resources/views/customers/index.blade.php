@@ -301,34 +301,34 @@ $(document).ready(function(){
 							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
 					</tr>
+					<!-- Delete Modal HTML -->
+					<div id="deleteEmployeeModal" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form action="{{route('customers.destroy', $customer->id)}}" method="post">
+									@csrf
+									@method('delete')
+									<div class="modal-header">
+										<h4 class="modal-title">Xóa khách hàng</h4>
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									</div>
+									<div class="modal-body">
+										<p>Bạn có chắc muốn xóa khách hàng này</p>
+									</div>
+									<div class="modal-footer">
+										<input type="button" class="btn btn-default" data-dismiss="modal" value="Đóng">
+										<input type="submit" class="btn btn-danger" value="Xóa">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
                     @endforeach
 				</tbody>
 			</table>
             <div class="d-flex justify-content-center">
 				{{ $customers->links('pagination::bootstrap-4') }}
 		    </div>
-		</div>
-	</div>
-</div>
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-            <form action="{{route('customers.destroy', $customer->id)}}" method="post">
-                @csrf
-                @method('delete')
-				<div class="modal-header">
-					<h4 class="modal-title">Xóa khách hàng</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>Bạn có chắc muốn xóa khách hàng này</p>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Đóng">
-					<input type="submit" class="btn btn-danger" value="Xóa">
-				</div>
-			</form>
 		</div>
 	</div>
 </div>

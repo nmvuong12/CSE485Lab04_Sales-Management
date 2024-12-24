@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->date('order_date'); // Ngày đặt hàng
-            $table->string('status')->default('Pending'); // Trạng thái đơn hàng: Pending, Processing, Completed, Cancelled
+            $table->string('status')->default('0');
             $table->timestamps();
         });
     }
