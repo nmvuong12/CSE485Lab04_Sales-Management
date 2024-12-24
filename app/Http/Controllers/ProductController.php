@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -31,7 +31,21 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+        ]);
+
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được thêm thành công!');
     }
 
     /**
@@ -39,7 +53,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -47,7 +62,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -55,7 +71,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+        ]);
+
+        $product = Product::findOrFail($id);
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được sửa thành công');
     }
 
     /**
@@ -63,6 +94,15 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+// Tìm sản phẩm theo ID
+$product = Product::find($id);
+
+// Kiểm tra nếu sản phẩm tồn tại
+if ($product) {
+    $product->delete();  // Xóa sản phẩm
+    return redirect()->route('products.index')->with('success', 'Sản phẩm đã được xóa thành công');
+} else {
+    return redirect()->route('products.index')->with('error', 'Không tìm thấy sản phẩm');
+        }
     }
 }

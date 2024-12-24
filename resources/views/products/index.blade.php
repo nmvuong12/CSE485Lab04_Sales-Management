@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="Content-Language" content="vi">
 <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -273,7 +274,7 @@ $(document).ready(function(){
 						<h2>Quản lý <b>Sản phẩm</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm sản phẩm</span></a>
+						<a href="{{ route('products.create') }}" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm sản phẩm</span></a>
 					</div>
 				</div>
 			</div>
@@ -288,14 +289,34 @@ $(document).ready(function(){
 					</tr>
 				</thead>
 				<tbody>	
-					@foreach($products as $product)				
+					@foreach($products as $product)		
+					<div id="deleteEmployeeModal" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form action="{{ route('products.destroy', $product->id) }}" method="POST">
+									@csrf
+									@method('DELETE') 
+									<div class="modal-header">						
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									</div>
+									<div class="modal-body">					
+										<h4>Bạn chắc chắn muốn xóa không?</h4>
+									</div>
+									<div class="modal-footer">
+										<input type="button" class="btn btn-default" data-dismiss="modal" value="Không">
+										<input type="submit" class="btn btn-danger" value="Có">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>		
 					<tr>
 						<td>{{$product->name}}</td>
 						<td>{{$product->description}}</td>
 						<td>{{$product->price}}</td>
 						<td>{{$product->quantity}}</td>
 						<td>
-							<a href="#routeEdit" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+							<a href="{{ route('products.edit', $product->id) }}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
 					</tr> 
@@ -308,26 +329,8 @@ $(document).ready(function(){
 		</div>
 	</div>        
 </div>
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Delete Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">					
-					<p>Are you sure you want to delete these Records?</p>
-					<p class="text-warning"><small>This action cannot be undone.</small></p>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+{{-- delete --}}
+
+
 </body>
 </html>
